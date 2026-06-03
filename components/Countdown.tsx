@@ -88,11 +88,11 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
       {/* SYSTEM TEXT */}
       <p className="text-gray-400 tracking-[0.4em] text-sm z-10">
-        CONTAINMENT STABLE
+        I love you💜
       </p>
 
       <p className="mt-3 text-purple-400 animate-pulse tracking-[0.3em]">
-        a surprise is waiting for you... let’s wait until the date
+        a surprise is waiting for you...
       </p>
 
       {/* TIMER */}
@@ -115,7 +115,7 @@ export default function Countdown({ onFinish }: CountdownProps) {
       {panelOpen && (
         <div className="absolute top-10 right-4 bg-black/80 border border-purple-500 p-4 rounded-xl w-48 z-50">
           <p className="text-xs text-purple-300 mb-2 tracking-widest">
-            DEV PANEL
+           LOVE SIGHT
           </p>
 
           <label className="text-xs text-gray-400">
@@ -140,7 +140,7 @@ export default function Countdown({ onFinish }: CountdownProps) {
             }}
             className="mt-3 text-xs text-red-400 hover:text-red-300"
           >
-            FORCE UNLOCK
+            MADE BY USMAN
           </button>
         </div>
       )}
