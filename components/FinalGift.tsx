@@ -79,7 +79,7 @@ export default function FinalGift({ onOpen }: FinalGiftProps) {
       {/* loading state */}
       {revealed < loves.length && (
         <p className="mt-8 text-purple-400 animate-fadeIn">
-          unlocking memories...
+          unlocking love...
         </p>
       )}
 

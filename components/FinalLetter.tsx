@@ -15,6 +15,7 @@ export default function FinalLetter() {
       setTimeout(() => setStep(6), 14500),
       setTimeout(() => setStep(7), 17500),
       setTimeout(() => setStep(8), 20500),
+      setTimeout(() => setStep(9), 23500),
     ];
 
     return () => timers.forEach(clearTimeout);
@@ -23,7 +24,7 @@ export default function FinalLetter() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center relative overflow-hidden">
 
-      {/* soft ambient background */}
+      {/* background glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black to-black" />
 
       <div className="relative z-10 max-w-2xl">
@@ -32,7 +33,6 @@ export default function FinalLetter() {
           a final message for you 💜
         </h2>
 
-        {/* subtle pause before text starts */}
         {step >= 1 && (
           <p className="mt-10 text-gray-300 animate-fadeIn">
             happy birthday, dije 💜
@@ -62,7 +62,7 @@ export default function FinalLetter() {
 
         {step >= 5 && (
           <p className="mt-6 text-gray-300 animate-fadeIn leading-relaxed">
-            you are emotional, funny, soft-hearted, and real in a way people don’t always notice at first.
+            you are emotional, funny, soft-hearted, and real in a way people don’t always notice.
           </p>
         )}
 
@@ -79,16 +79,24 @@ export default function FinalLetter() {
           </p>
         )}
 
-        {/* emotional pause before ending */}
         {step >= 8 && (
-          <div className="mt-12 animate-fadeIn">
-            <p className="text-white text-lg font-semibold">
-              happy birthday, khadss 💜
+          <p className="mt-10 text-white text-lg font-semibold animate-fadeIn">
+            and i want you to know something important…
+          </p>
+        )}
+
+        {step >= 9 && (
+          <div className="mt-14 animate-fadeIn flex flex-col items-center">
+
+            <p className="text-purple-400 text-4xl md:text-6xl font-extrabold tracking-wide heartbeat
+              drop-shadow-[0_0_25px_rgba(168,85,247,0.7)]">
+              i love you so much 💜
             </p>
 
-            <p className="text-gray-500 text-sm mt-4">
+            <p className="text-gray-500 text-sm mt-6 tracking-widest opacity-80">
               — end —
             </p>
+
           </div>
         )}
 

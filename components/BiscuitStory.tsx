@@ -37,7 +37,7 @@ export default function BiscuitStory() {
           </p>
 
           <p>
-            then one random day, you posted a biscuit.
+            then one random day, you sent a snap of a biscuit.
           </p>
 
           <p>

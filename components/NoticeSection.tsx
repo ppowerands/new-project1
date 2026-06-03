@@ -12,7 +12,7 @@ const notices = [
     text: "you try to act normal, but it never works 😂 your energy always changes and it’s obvious."
   },
   {
-    title: "kaii",
+    title: "kaii your favorite word obviously😂" ,
     text: "somehow 'kaii' fits into every mood, every conversation, every moment."
   },
   {
@@ -24,7 +24,7 @@ const notices = [
     text: "your food combinations still confuse me, but at this point it’s part of your personality."
   },
   {
-    title: "you and your sallah ram (sorryyyyy) ",
+    title: "you and your sallah ram (sorryyyyy😂😂😂) ",
     text: "you care so deeply that even something meant for celebration made you emotional. that says everything."
   }
 ];

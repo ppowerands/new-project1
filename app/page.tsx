@@ -1,52 +1,53 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
+import Countdown from "@/components/Countdown";
 
 import BiscuitStory from "@/components/BiscuitStory";
 import NoticeSection from "@/components/NoticeSection";
 import InvestigationSection from "@/components/InvestigationSection";
 import StatsSection from "@/components/StatsSection";
 import LoveList from "@/components/LoveList";
+
 import FinalGift from "@/components/FinalGift";
 import FinalLetter from "@/components/FinalLetter";
 
+// 🔐 DEV SWITCH (CHANGE BEFORE DEPLOY)
+const DEV_MODE = false;
+
 export default function Page() {
-  const [stage, setStage] = useState<
-    "story" | "gift" | "letter"
-  >("story");
+  // 🔐 LOCK STATE
+  const [isUnlocked, setIsUnlocked] = useState(DEV_MODE);
 
-  useEffect(() => {
-    const sections = document.querySelectorAll(".section");
+  // 🎬 FINAL FLOW STATE
+  const [stage, setStage] = useState<"gift" | "letter">("gift");
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.15 }
+  // 🔒 LOCK SCREEN (COUNTDOWN GATE)
+  if (!isUnlocked) {
+    return (
+      <Countdown onFinish={() => setIsUnlocked(true)} />
     );
+  }
 
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, []);
-
+  // 🎬 MAIN EXPERIENCE AFTER UNLOCK
   return (
-    <main>
+    <main className="relative">
+
+      {/* STORY SECTIONS */}
       <BiscuitStory />
       <NoticeSection />
       <InvestigationSection />
       <StatsSection />
       <LoveList />
 
-      {stage === "story" && (
+      {/* FINAL GIFT → LETTER TRANSITION */}
+      {stage === "gift" && (
         <FinalGift onOpen={() => setStage("letter")} />
       )}
 
       {stage === "letter" && <FinalLetter />}
+
     </main>
   );
 }

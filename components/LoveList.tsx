@@ -50,7 +50,7 @@ export default function LoveList() {
           >
 
             <h3 className="text-purple-300 font-semibold">
-              memory #{index + 1}
+              reason #{index + 1}
             </h3>
 
             {open === index && (

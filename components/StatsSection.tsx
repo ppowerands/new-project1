@@ -18,7 +18,7 @@ export default function StatsSection() {
         setKaiiCount(i);
       }
 
-      if (j < 128) {
+      if (j < 5000) {
         j += 2;
         setLoveCount(j);
       }
@@ -28,7 +28,7 @@ export default function StatsSection() {
         setBiscuitChance(k);
       }
 
-      if (i >= 42 && j >= 128 && k >= 99) {
+      if (i >= 42 && j >= 5000 && k >= 99) {
         clearInterval(interval);
       }
     }, 30);
