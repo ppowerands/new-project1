@@ -11,7 +11,12 @@ const targetDate = new Date("2026-06-26T00:00:00").getTime();
 export default function Countdown({ onFinish }: CountdownProps) {
   const [mounted, setMounted] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
-  const [shake, setShake] = useState(false);
+
+  // 🎛️ DEV PANEL STATE
+  const [panelOpen, setPanelOpen] = useState(false);
+
+  // ⚡ SPEED CONTROL (1 = normal, 10 = fast, 100 = anime fast)
+  const [speed, setSpeed] = useState(1);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -25,20 +30,17 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
     const interval = setInterval(() => {
       const now = Date.now();
-      const diff = targetDate - now;
+
+      // ⚡ speed-controlled time simulation
+      const adjustedNow = now * speed;
+      const adjustedTarget = targetDate * speed;
+
+      const diff = adjustedTarget - adjustedNow;
 
       if (diff <= 0) {
         clearInterval(interval);
-
-        // ⚡ warp trigger
-        setShake(true);
-        setTimeout(() => setShake(false), 600);
-
-        setTimeout(() => {
-          setUnlocked(true);
-          onFinish();
-        }, 500);
-
+        setUnlocked(true);
+        onFinish();
         return;
       }
 
@@ -48,39 +50,29 @@ export default function Countdown({ onFinish }: CountdownProps) {
         minutes: Math.floor((diff / (1000 * 60)) % 60),
         seconds: Math.floor((diff / 1000) % 60),
       });
-    }, 1000);
+    }, 200);
 
     return () => clearInterval(interval);
-  }, [onFinish]);
+  }, [speed, onFinish]);
 
   if (!mounted) return null;
 
-  // 🔓 UNLOCKED DIMENSION SHIFT
+  // 🔓 UNLOCK SCREEN (UNCHANGED ANIME WARP FEEL)
   if (unlocked) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-black text-white relative overflow-hidden">
 
-        {/* warp background */}
         <div className="absolute inset-0 scale-150 blur-2xl bg-gradient-to-br from-purple-900 via-black to-indigo-900 animate-pulse" />
 
-        {/* portal rings */}
-        <div className="absolute w-40 h-40 rounded-full bg-purple-500/40 animate-ping" />
-        <div className="absolute w-96 h-96 rounded-full bg-purple-500/20 animate-ping" />
-        <div className="absolute w-[700px] h-[700px] rounded-full bg-purple-500/10 animate-pulse" />
+        <div className="absolute w-96 h-96 rounded-full bg-purple-500/30 animate-ping" />
+        <div className="absolute w-[600px] h-[600px] rounded-full bg-purple-500/10 animate-pulse" />
 
-        {/* core glow */}
-        <div className="absolute w-32 h-32 rounded-full bg-purple-400 blur-3xl animate-pulse" />
-
-        {/* glitch overlay */}
-        <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_bottom,transparent_0%,rgba(255,255,255,0.1)_50%,transparent_100%)] animate-pulse" />
-
-        {/* text */}
         <div className="z-10 text-center">
-          <h1 className="text-6xl md:text-8xl font-extrabold tracking-widest text-purple-300 drop-shadow-[0_0_60px_rgba(168,85,247,1)] animate-pulse">
+          <h1 className="text-6xl md:text-8xl font-bold text-purple-300 animate-pulse tracking-widest">
             UNLOCKED
           </h1>
 
-          <p className="mt-6 text-gray-300 tracking-[0.5em] animate-pulse">
+          <p className="mt-6 text-gray-300 tracking-[0.4em]">
             DIMENSION SHIFT COMPLETE
           </p>
         </div>
@@ -88,31 +80,24 @@ export default function Countdown({ onFinish }: CountdownProps) {
     );
   }
 
-  // ⏳ COUNTDOWN
   return (
-    <main
-      className={`min-h-screen flex flex-col items-center justify-center bg-black text-white relative overflow-hidden transition-all duration-300 ${
-        shake ? "animate-pulse scale-105" : ""
-      }`}
-    >
+    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white relative overflow-hidden">
+
       {/* background aura */}
       <div className="absolute inset-0 bg-purple-900/20 blur-3xl animate-pulse" />
 
-      {/* unstable field */}
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.3),transparent_60%)] animate-ping" />
-
-      {/* system status */}
+      {/* SYSTEM TEXT */}
       <p className="text-gray-400 tracking-[0.4em] text-sm z-10">
-        A suprise is waiting for you💜
+        CONTAINMENT STABLE
       </p>
 
       <p className="mt-3 text-purple-400 animate-pulse tracking-[0.3em]">
-        Usman loves you so much!!!💜💜💜
+        a surprise is waiting for you... let’s wait until the date
       </p>
 
-      {/* timer */}
+      {/* TIMER */}
       <div className="mt-10 z-10 text-center">
-        <div className="text-5xl md:text-7xl font-bold text-purple-300 drop-shadow-[0_0_30px_rgba(168,85,247,1)] tracking-widest">
+        <div className="text-5xl md:text-7xl font-bold text-purple-300 tracking-widest drop-shadow-[0_0_30px_rgba(168,85,247,1)]">
           {String(timeLeft.days).padStart(2, "0")}:
           {String(timeLeft.hours).padStart(2, "0")}:
           {String(timeLeft.minutes).padStart(2, "0")}:
@@ -120,10 +105,45 @@ export default function Countdown({ onFinish }: CountdownProps) {
         </div>
       </div>
 
-      {/* warning */}
-      <div className="absolute bottom-10 text-xs text-purple-500 opacity-50 tracking-[0.5em] animate-pulse">
-        ▓ Baby you have you to wait🌚 ▓
-      </div>
+      {/* 🧪 HIDDEN DEV BUTTON */}
+      <button
+        onClick={() => setPanelOpen(!panelOpen)}
+        className="absolute top-4 right-4 w-3 h-3 rounded-full bg-purple-500 opacity-40 hover:opacity-100"
+      />
+
+      {/* 🎛️ DEV PANEL */}
+      {panelOpen && (
+        <div className="absolute top-10 right-4 bg-black/80 border border-purple-500 p-4 rounded-xl w-48 z-50">
+          <p className="text-xs text-purple-300 mb-2 tracking-widest">
+            DEV PANEL
+          </p>
+
+          <label className="text-xs text-gray-400">
+            SPEED: {speed.toFixed(1)}x
+          </label>
+
+          <input
+            type="range"
+            min="1"
+            max="100"
+            step="1"
+            value={speed}
+            onChange={(e) => setSpeed(Number(e.target.value))}
+            className="w-full mt-2"
+          />
+
+          <button
+            onClick={() => {
+              setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+              setUnlocked(true);
+              onFinish();
+            }}
+            className="mt-3 text-xs text-red-400 hover:text-red-300"
+          >
+            FORCE UNLOCK
+          </button>
+        </div>
+      )}
     </main>
   );
 }
