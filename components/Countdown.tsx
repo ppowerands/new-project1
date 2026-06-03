@@ -27,6 +27,7 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
       if (difference <= 0) {
         clearInterval(interval);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         onFinish();
         return;
       }
@@ -37,41 +38,33 @@ export default function Countdown({ onFinish }: CountdownProps) {
         minutes: Math.floor((difference / (1000 * 60)) % 60),
         seconds: Math.floor((difference / 1000) % 60),
       });
-    }, 1000);
+    }, 250); // smoother updates than 1s
 
     return () => clearInterval(interval);
   }, [onFinish]);
 
   if (!mounted) return null;
 
+  const format = (value: number) => String(value).padStart(2, "0");
+
   return (
-    <main>
-      <p className="text-gray-400 mt-4">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
+      <p className="text-gray-400 text-sm tracking-widest">
         unlocking on june 26, 2026
       </p>
 
-      <p>something is waiting for you 💜</p>
+      <p className="mt-4 text-lg text-purple-300">
+        something is waiting for you 💜
+      </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10 max-w-4xl">
-        <div className="bg-[#111] border border-purple-900 rounded-2xl p-6">
-          <div className="text-4xl md:text-6xl font-bold">{timeLeft.days}</div>
-          <div className="text-gray-400 mt-2">days</div>
-        </div>
-
-        <div className="bg-[#111] border border-purple-900 rounded-2xl p-6">
-          <div className="text-4xl md:text-6xl font-bold">{timeLeft.hours}</div>
-          <div className="text-gray-400 mt-2">hours</div>
-        </div>
-
-        <div className="bg-[#111] border border-purple-900 rounded-2xl p-6">
-          <div className="text-4xl md:text-6xl font-bold">{timeLeft.minutes}</div>
-          <div className="text-gray-400 mt-2">minutes</div>
-        </div>
-
-        <div className="bg-[#111] border border-purple-900 rounded-2xl p-6">
-          <div className="text-4xl md:text-6xl font-bold">{timeLeft.seconds}</div>
-          <div className="text-gray-400 mt-2">seconds</div>
-        </div>
+      {/* Smooth single-line counter */}
+      <div
+        className="mt-10 text-5xl md:text-7xl font-bold tracking-widest transition-all duration-200 ease-out"
+      >
+        {format(timeLeft.days)}:
+        {format(timeLeft.hours)}:
+        {format(timeLeft.minutes)}:
+        {format(timeLeft.seconds)}
       </div>
     </main>
   );
