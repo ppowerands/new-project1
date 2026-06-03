@@ -1,21 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import Countdown from "@/components/Countdown";
-import BiscuitStory from "@/components/BiscuitStory";
 
-export default function Page() {
-  const [isUnlocked, setIsUnlocked] = useState(false);
-
-  if (!isUnlocked) {
-    return <Countdown onFinish={() => setIsUnlocked(true)} />;
-  }
+export default function BiscuitStory() {
+  const [reveal, setReveal] = useState(false);
 
   return (
-    <main className="min-h-screen text-white">
-      <h1 className="p-6 text-green-400">STEP 2 TESTING BISCUIT STORY</h1>
+    <section className="p-10 text-center text-white">
 
-      <BiscuitStory />
-    </main>
+      <h2 className="text-2xl text-purple-400">
+        BISCUIT STORY TEST
+      </h2>
+
+      <button
+        onClick={() => setReveal(true)}
+        className="mt-6 px-4 py-2 bg-purple-600 rounded"
+      >
+        CLICK ME
+      </button>
+
+      {reveal && (
+        <div className="mt-6 text-green-400">
+          REVEALED CONTENT WORKING ✅
+        </div>
+      )}
+
+    </section>
   );
 }
