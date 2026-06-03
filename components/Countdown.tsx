@@ -12,12 +12,6 @@ export default function Countdown({ onFinish }: CountdownProps) {
   const [mounted, setMounted] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
 
-  // 🎛️ DEV PANEL STATE
-  const [panelOpen, setPanelOpen] = useState(false);
-
-  // ⚡ SPEED CONTROL (1 = normal, 10 = fast, 100 = anime fast)
-  const [speed, setSpeed] = useState(1);
-
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -30,12 +24,7 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
     const interval = setInterval(() => {
       const now = Date.now();
-
-      // ⚡ speed-controlled time simulation
-      const adjustedNow = now * speed;
-      const adjustedTarget = targetDate * speed;
-
-      const diff = adjustedTarget - adjustedNow;
+      const diff = targetDate - now;
 
       if (diff <= 0) {
         clearInterval(interval);
@@ -53,15 +42,14 @@ export default function Countdown({ onFinish }: CountdownProps) {
     }, 200);
 
     return () => clearInterval(interval);
-  }, [speed, onFinish]);
+  }, [onFinish]);
 
   if (!mounted) return null;
 
-  // 🔓 UNLOCK SCREEN (UNCHANGED ANIME WARP FEEL)
+  // 🔓 UNLOCK SCREEN
   if (unlocked) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-black text-white relative overflow-hidden">
-
         <div className="absolute inset-0 scale-150 blur-2xl bg-gradient-to-br from-purple-900 via-black to-indigo-900 animate-pulse" />
 
         <div className="absolute w-96 h-96 rounded-full bg-purple-500/30 animate-ping" />
@@ -82,7 +70,6 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white relative overflow-hidden">
-
       {/* background aura */}
       <div className="absolute inset-0 bg-purple-900/20 blur-3xl animate-pulse" />
 
@@ -104,46 +91,6 @@ export default function Countdown({ onFinish }: CountdownProps) {
           {String(timeLeft.seconds).padStart(2, "0")}
         </div>
       </div>
-
-      {/* 🧪 HIDDEN DEV BUTTON */}
-      <button
-        onClick={() => setPanelOpen(!panelOpen)}
-        className="absolute top-4 right-4 w-3 h-3 rounded-full bg-purple-500 opacity-40 hover:opacity-100"
-      />
-
-      {/* 🎛️ DEV PANEL */}
-      {panelOpen && (
-        <div className="absolute top-10 right-4 bg-black/80 border border-purple-500 p-4 rounded-xl w-48 z-50">
-          <p className="text-xs text-purple-300 mb-2 tracking-widest">
-           LOVE SIGHT
-          </p>
-
-          <label className="text-xs text-gray-400">
-            SPEED: {speed.toFixed(1)}x
-          </label>
-
-          <input
-            type="range"
-            min="1"
-            max="100"
-            step="1"
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-            className="w-full mt-2"
-          />
-
-          <button
-            onClick={() => {
-              setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-              setUnlocked(true);
-              onFinish();
-            }}
-            className="mt-3 text-xs text-red-400 hover:text-red-300"
-          >
-            MADE BY USMAN
-          </button>
-        </div>
-      )}
     </main>
   );
 }
