@@ -11,8 +11,8 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center text-white">
-      <h1>UNLOCKED ✅</h1>
+    <main className="min-h-screen text-white flex items-center justify-center">
+      <h1>STEP 1 PASSED ✅</h1>
     </main>
   );
 }
