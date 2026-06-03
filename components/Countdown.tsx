@@ -103,11 +103,11 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
       {/* system status */}
       <p className="text-gray-400 tracking-[0.4em] text-sm z-10">
-        SYSTEM STABILITY: NOMINAL
+        A suprise for the love of my life💜
       </p>
 
       <p className="mt-3 text-purple-400 animate-pulse tracking-[0.3em]">
-        containment field active...
+        YES USMAN LOVES YOU SO MUCH!!!💜💜💜
       </p>
 
       {/* timer */}
