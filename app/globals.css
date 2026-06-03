@@ -1,170 +1,188 @@
-@import "tailwindcss";
+@import “tailwindcss”;
 
 /* =========================
-   ROOT THEME
+ROOT THEME
 ========================= */
 :root {
-  --background: #070707;
-  --foreground: #ededed;
+–background: #070707;
+–foreground: #ededed;
 
-  --purple-primary: #a855f7;
-  --purple-soft: #c084fc;
-  --purple-glow: rgba(168, 85, 247, 0.35);
+–purple-primary: #a855f7;
+–purple-soft: #c084fc;
+–purple-glow: rgba(168, 85, 247, 0.35);
 }
 
 /* =========================
-   BASE
+BASE
 ========================= */
 body {
-  margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+margin: 0;
+background: var(–background);
+color: var(–foreground);
+font-family: Arial, Helvetica, sans-serif;
 
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+overflow-x: hidden;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
 
-  line-height: 1.6;
-  letter-spacing: 0.2px;
+line-height: 1.6;
+letter-spacing: 0.2px;
 }
 
 /* =========================
-   CINEMATIC BACKGROUND
+CINEMATIC BACKGROUND
 ========================= */
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 15%, rgba(168,85,247,0.18), transparent 45%),
-    radial-gradient(circle at 80% 85%, rgba(192,132,252,0.10), transparent 55%),
-    radial-gradient(circle at 50% 50%, rgba(120,60,255,0.05), transparent 60%);
-  z-index: -2;
-  animation: slowPulse 14s ease-in-out infinite;
+content: “”;
+position: fixed;
+inset: 0;
+background:
+radial-gradient(circle at 20% 15%, rgba(168,85,247,0.18), transparent 45%),
+radial-gradient(circle at 80% 85%, rgba(192,132,252,0.10), transparent 55%),
+radial-gradient(circle at 50% 50%, rgba(120,60,255,0.05), transparent 60%);
+z-index: -2;
+animation: slowPulse 14s ease-in-out infinite;
 }
 
 body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.92));
-  z-index: -1;
+content: “”;
+position: fixed;
+inset: 0;
+background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.92));
+z-index: -1;
 }
 
 @keyframes slowPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.03);
-    opacity: 0.85;
-  }
+0%, 100% {
+transform: scale(1);
+opacity: 1;
+}
+
+50% {
+transform: scale(1.03);
+opacity: 0.85;
+}
 }
 
 /* =========================
-   SCROLL REVEAL SYSTEM
+SECTION SYSTEM
 ========================= */
 .section {
-  opacity: 0;
-  transform: translateY(60px);
-  filter: blur(6px);
-  transition: all 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform, filter;
+opacity: 1;
+transform: translateY(0);
+filter: blur(0);
 }
 
 .section.visible {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
+opacity: 1;
+transform: translateY(0);
+filter: blur(0);
 }
 
 /* =========================
-   SMOOTH SCROLL
+SMOOTH SCROLL
 ========================= */
 html {
-  scroll-behavior: smooth;
+scroll-behavior: smooth;
 }
 
 /* =========================
-   ANIMATIONS
+ANIMATIONS
 ========================= */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+from {
+opacity: 0;
+transform: translateY(12px);
+}
+
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.8s ease-out both;
+animation: fadeIn 0.8s ease-out both;
 }
 
 /* =========================
-   HEARTBEAT (FINAL LINE EFFECT)
+HEARTBEAT
 ========================= */
 @keyframes heartbeat {
-  0% { transform: scale(1); }
-  20% { transform: scale(1.05); }
-  40% { transform: scale(1); }
-  60% { transform: scale(1.08); }
-  80% { transform: scale(1); }
-  100% { transform: scale(1); }
+0% {
+transform: scale(1);
+}
+
+20% {
+transform: scale(1.05);
+}
+
+40% {
+transform: scale(1);
+}
+
+60% {
+transform: scale(1.08);
+}
+
+80% {
+transform: scale(1);
+}
+
+100% {
+transform: scale(1);
+}
 }
 
 .heartbeat {
-  animation: heartbeat 1.4s ease-in-out infinite;
-  will-change: transform;
+animation: heartbeat 1.4s ease-in-out infinite;
+will-change: transform;
 }
 
 /* =========================
-   GLOW TEXT
+GLOW TEXT
 ========================= */
 .glow-soft {
-  text-shadow:
-    0 0 6px rgba(168,85,247,0.25),
-    0 0 18px rgba(168,85,247,0.12);
+text-shadow:
+0 0 6px rgba(168,85,247,0.25),
+0 0 18px rgba(168,85,247,0.12);
 }
 
 /* =========================
-   CARDS
+CARDS
 ========================= */
 .card-hover {
-  transition: all 0.25s ease;
+transition: all 0.25s ease;
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  border-color: rgba(168, 85, 247, 0.6);
+transform: translateY(-4px);
+border-color: rgba(168, 85, 247, 0.6);
 }
 
 /* =========================
-   BUTTONS
+BUTTONS
 ========================= */
 button {
-  transition: all 0.25s ease;
-  -webkit-tap-highlight-color: transparent;
+transition: all 0.25s ease;
+-webkit-tap-highlight-color: transparent;
 }
 
 button:hover {
-  transform: translateY(-2px) scale(1.03);
+transform: translateY(-2px) scale(1.03);
 }
 
 button:active {
-  transform: scale(0.98);
+transform: scale(0.98);
 }
 
 /* =========================
-   MOBILE SAFETY MODE
+MOBILE SAFETY MODE
 ========================= */
 @media (prefers-reduced-motion: reduce) {
-  * {
+
+* {
     animation: none !important;
     transition: none !important;
-  }
-}
+    }
+    }
