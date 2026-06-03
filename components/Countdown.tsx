@@ -6,65 +6,64 @@ interface CountdownProps {
   onFinish: () => void;
 }
 
-const targetDate = new Date("2026-06-26T00:00:00").getTime();
-
 export default function Countdown({ onFinish }: CountdownProps) {
   const [mounted, setMounted] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  // ⚡ start at 10 seconds
+  const [timeLeft, setTimeLeft] = useState(10);
 
   useEffect(() => {
     setMounted(true);
 
     const interval = setInterval(() => {
-      const now = Date.now();
-      const difference = targetDate - now;
-
-      if (difference <= 0) {
-        clearInterval(interval);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        onFinish();
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / (1000 * 60)) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setUnlocked(true);
+          onFinish();
+          return 0;
+        }
+        return prev - 1;
       });
-    }, 250); // smoother updates than 1s
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [onFinish]);
 
   if (!mounted) return null;
 
-  const format = (value: number) => String(value).padStart(2, "0");
+  // 🔓 UNLOCK SCREEN
+  if (unlocked) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-black text-white">
+        <h1 className="text-6xl font-bold text-purple-400 animate-pulse tracking-widest">
+          UNLOCKED
+        </h1>
+      </main>
+    );
+  }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
-      <p className="text-gray-400 text-sm tracking-widest">
-        unlocking on june 26, 2026
+    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white relative overflow-hidden">
+
+      {/* anime glow background */}
+      <div className="absolute inset-0 bg-purple-900/20 blur-3xl animate-pulse" />
+
+      {/* header */}
+      <p className="text-gray-400 tracking-[0.4em] text-sm z-10">
+        SYSTEM TEST MODE
       </p>
 
-      <p className="mt-4 text-lg text-purple-300">
-        something is waiting for you 💜
-      </p>
+      {/* countdown */}
+      <div className="mt-10 z-10 text-center">
+        <div className="text-8xl font-bold text-purple-300 drop-shadow-[0_0_25px_rgba(168,85,247,0.9)] animate-pulse">
+          {timeLeft}
+        </div>
 
-      {/* Smooth single-line counter */}
-      <div
-        className="mt-10 text-5xl md:text-7xl font-bold tracking-widest transition-all duration-200 ease-out"
-      >
-        {format(timeLeft.days)}:
-        {format(timeLeft.hours)}:
-        {format(timeLeft.minutes)}:
-        {format(timeLeft.seconds)}
+        <p className="mt-4 text-purple-400 animate-pulse">
+          initiating sequence...
+        </p>
       </div>
     </main>
   );
