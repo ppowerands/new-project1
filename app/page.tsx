@@ -13,6 +13,7 @@ import FinalLetter from "@/components/FinalLetter";
 
 export default function Page() {
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [showLetter, setShowLetter] = useState(false);
 
   if (!isUnlocked) {
     return <Countdown onFinish={() => setIsUnlocked(true)} />;
@@ -20,9 +21,6 @@ export default function Page() {
 
   return (
     <main className="min-h-screen text-white">
-      <h1 className="p-6 text-green-400">
-        STEP 5 TEST (ALL COMPONENTS)
-      </h1>
 
       <BiscuitStory />
       <NoticeSection />
@@ -30,9 +28,12 @@ export default function Page() {
       <StatsSection />
       <LoveList />
 
-      <FinalGift onOpen={() => {}} />
+      {!showLetter ? (
+        <FinalGift onOpen={() => setShowLetter(true)} />
+      ) : (
+        <FinalLetter />
+      )}
 
-      <FinalLetter />
     </main>
   );
 }
