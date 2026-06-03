@@ -103,11 +103,11 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
       {/* system status */}
       <p className="text-gray-400 tracking-[0.4em] text-sm z-10">
-        A suprise for the love of my life💜
+        A suprise is waiting for you💜
       </p>
 
       <p className="mt-3 text-purple-400 animate-pulse tracking-[0.3em]">
-        YES USMAN LOVES YOU SO MUCH!!!💜💜💜
+        Usman loves you so much!!!💜💜💜
       </p>
 
       {/* timer */}
@@ -122,7 +122,7 @@ export default function Countdown({ onFinish }: CountdownProps) {
 
       {/* warning */}
       <div className="absolute bottom-10 text-xs text-purple-500 opacity-50 tracking-[0.5em] animate-pulse">
-        ▓ DIMENSION LOCK ACTIVE ▓
+        ▓ Baby you have you to wait🌚 ▓
       </div>
     </main>
   );
